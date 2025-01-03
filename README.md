@@ -143,3 +143,24 @@ src/
     ├── client.rs         # K8s client wrapper
     └── errors.rs         # Error handling
 ```
+
+# Build the image
+docker build -t pod-metrics:latest .
+
+# Test locally (using your local kubeconfig)
+docker run -v ~/.kube/config:/root/.kube/config pod-metrics:latest
+
+# For Minikube, you might need to build the image in Minikube's context
+eval $(minikube docker-env)
+docker build -t pod-metrics:latest .
+
+# Deploy to Kubernetes
+kubectl apply -f deployment/pod-metrics.yaml
+
+
+# Apply the configurations
+kubectl apply -f deployment/configmap.yaml
+kubectl apply -f deployment/deployment.yaml
+
+# Check the deployment
+kubectl get pods -l app=pod-metrics
