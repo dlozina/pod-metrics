@@ -21,3 +21,4 @@ metrics-exporter-prometheus = "0.16"
 dashmap = "6.1.0"
 thiserror = "2.0.9"
 rustls = { version = "0.23", features = ["ring"] }
+dotenv = "0.15.0"

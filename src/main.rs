@@ -1,5 +1,6 @@
 use anyhow::Result;
 use tracing_subscriber::fmt::format::FmtSpan;
+use dotenv::dotenv;
 use crate::kubernetes::client::Client;
 use crate::metrics::collector::MetricsCollector;
 
@@ -9,8 +10,10 @@ mod metrics;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Load environment variables from .env file
+    dotenv().ok();
     // Initialize rustls crypto (required for kube client in newer versions)
-    rustls::crypto::ring::default_provider().install_default();
+    let _ = rustls::crypto::ring::default_provider().install_default();
 
     // Initialize logging
     tracing_subscriber::fmt()
